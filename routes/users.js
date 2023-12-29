@@ -42,8 +42,17 @@ router.get('/buscar', async (req, res)=>{
 
 })
 
-router.delete('/:id', (req, res) => {
-  res.send('Eliminar un usuario');
+router.delete('/:id',async(req, res) => {
+  const{id}= req.params
+  try{
+    const deleteById = await Persona.findByIdAndDelete({_id:id})
+    console.log('Persona eliminada:', deleteById);
+    res.json({mensaje:'Persona eliminada correctamente'});
+  }catch (error){  
+  console.error(error) 
+  console.error('Error al eliminar tu persona');
+  res.json ({mensaje:'error al eliminar tu persona'})
+  }
 });
 
 router.put('/:id', (req, res) => {
