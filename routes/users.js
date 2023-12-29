@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const Personal = require('../models/personal');
+const Persona = require('../models/persona');
 
-/* GET users listing. */
+
 router.get('/', async (req, res) => {
 
-  const personal = await Personal.find();
+  const personas = await Persona.find();
   res.json({
-    personal: personal
+    personas: personas
   });
 
 });
@@ -18,25 +18,36 @@ router.post('/crear', async (req, res) => {
 
   console.log(nombre, apellido, dni);
 
-  const personal = new Personal({
+  const persona = new Persona({
     nombre: nombre,
     apellido: apellido,
     dni: dni
   });
 
-  await Personal.create(personal);
+  await Persona.create(persona);
 
   res.json({ 
     mensaje: 'Creamos un usuario'
   });
 });
 
+
+
+router.get('/buscar', async (req, res)=>{
+  const { nombre } = req.query;
+  console.log(` Buscamos Personas ${nombre}`);
+  const personas  = await Persona.find({nombre:nombre })
+  console.log(`La respuesta es ${personas}`);
+  res.json({ personas: personas })
+
+})
+
 router.delete('/:id', (req, res) => {
-  res.send('Eliminamos un usuario');
+  res.send('Eliminar un usuario');
 });
 
 router.put('/:id', (req, res) => {
-  res.send('Actualizamos un usuario');
+  res.send('Actualizar un usuario');
 });
 
 

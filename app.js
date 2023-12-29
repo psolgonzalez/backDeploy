@@ -27,8 +27,7 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler
-// error handler
+
 app.use(function(err, req, res, next) {
   console.error('Error en el manejo de errores:', err);
   res.status(err.status || 500).json({ error: err.message });
