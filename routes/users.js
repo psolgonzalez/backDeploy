@@ -55,9 +55,18 @@ router.delete('/:id',async(req, res) => {
   }
 });
 
-router.put('/:id', (req, res) => {
-  res.send('Actualizar un usuario');
-});
+router.put('/:id', async (req, res) => {
+  const {id}= req.params
+  try{
+    const putById= await Persona.findByIdAndUpdate({_id:id}, req.body, {new:true})
+    res.json ({mensaje:'Persona Actualizada correctamente'})
+  }catch (error){  
+    console.error(error) 
+    console.error('Error al actualizar tu persona');
+    res.json ({mensaje:'Persona no Actualizada correctamente'})
+    }
+  });
+
 
 
 module.exports = router;
